@@ -35,8 +35,8 @@ export default function Header() {
     }
   }, [])
 
-  const handleLogin = async () => {
-    window.location.href = '/api/auth/login'
+  const handleLogin = async (provider: 'github' | 'google' = 'github') => {
+    window.location.href = `/api/auth/login${provider === 'google' ? '/google' : ''}`
   }
 
   const handleLogout = async () => {
@@ -94,12 +94,20 @@ export default function Header() {
             </>
           ) : (
             <>
-              <button
-                onClick={handleLogin}
-                className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition"
-              >
-                使用 GitHub 登录
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => handleLogin('github')}
+                  className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition"
+                >
+                  使用 GitHub 登录
+                </button>
+                <button
+                  onClick={() => handleLogin('google')}
+                  className="px-4 py-2 text-sm font-medium text-foreground/70 hover:text-foreground transition"
+                >
+                  使用 Google 登录
+                </button>
+              </div>
               <button className="px-6 py-2 bg-primary text-primary-foreground rounded-full font-medium hover:opacity-90 transition">
                 Launch Now
               </button>
